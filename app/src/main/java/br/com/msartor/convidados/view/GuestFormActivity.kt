@@ -1,13 +1,14 @@
-package br.com.msartor.convidados
+package br.com.msartor.convidados.view
 
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import br.com.msartor.convidados.R
 import br.com.msartor.convidados.databinding.ActivityGuestFormBinding
+import br.com.msartor.convidados.model.GuestModel
+import br.com.msartor.convidados.viewmodel.GuestFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -30,6 +31,10 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if(v?.id == R.id.button_save){
+            val name = binding.editName.text.toString()
+            val presence = binding.radioPresente.isChecked
+            val guest = GuestModel(0, name, presence)
+            viewModel.insert(guest)
 
         }
     }

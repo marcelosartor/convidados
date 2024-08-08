@@ -1,13 +1,13 @@
-package br.com.msartor.convidados.ui
+package br.com.msartor.convidados.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class AllGuestsViewModel : ViewModel() {
+class PresentViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is gallery Fragment"
     }
     val text: LiveData<String> = _text
 }
