@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.msartor.convidados.databinding.FragmentAllGuestsBinding
+import br.com.msartor.convidados.view.adapter.GuestsAdapter
 import br.com.msartor.convidados.viewmodel.AllGuestsViewModel
 
 
@@ -19,6 +21,7 @@ class AllGuestsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val adapter = GuestsAdapter()
     private lateinit var viewModel: AllGuestsViewModel
 
     override fun onCreateView(
@@ -31,7 +34,12 @@ class AllGuestsFragment : Fragment() {
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // layout recycler view
+        binding.recyclerAllGuests.layoutManager = LinearLayoutManager(context)
 
+        // adapter
+        binding.recyclerAllGuests.adapter = adapter
+        viewModel.getAll()
 
         observe()
 
@@ -50,7 +58,7 @@ class AllGuestsFragment : Fragment() {
 
     fun observe(){
         viewModel.guests.observe(viewLifecycleOwner){
-            val s= ""
+            adapter.updateGuests(it)
             // Lista de convidados
         }
     }
