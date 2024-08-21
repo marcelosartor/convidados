@@ -1,4 +1,4 @@
-package br.com.msartor.convidados.ui
+package br.com.msartor.convidados.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

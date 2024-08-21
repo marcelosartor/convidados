@@ -1,4 +1,4 @@
-package br.com.msartor.convidados.ui
+package br.com.msartor.convidados.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import br.com.msartor.convidados.databinding.FragmentAbsentBinding
+import br.com.msartor.convidados.viewmodel.AbsentViewModel
 
 class AbsentFragment : Fragment() {
 
