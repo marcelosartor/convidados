@@ -6,13 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import br.com.msartor.convidados.databinding.RowGuestBinding
 import br.com.msartor.convidados.model.GuestModel
+import br.com.msartor.convidados.view.listener.OnGuestListener
 import br.com.msartor.convidados.view.viewholder.GuestViewHolder
 
 class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
     private var guestList: List<GuestModel> = listOf()
+    private lateinit var listener: OnGuestListener;
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuestViewHolder {
         val item = RowGuestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return GuestViewHolder(item)
+        return GuestViewHolder(item,listener)
     }
 
     override fun onBindViewHolder(holder: GuestViewHolder, position: Int) {
@@ -26,5 +28,9 @@ class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
     fun updateGuests(it: List<GuestModel>) {
         guestList = it
         notifyDataSetChanged()
+    }
+
+    fun attachListener(guestListener: OnGuestListener){
+        listener = guestListener
     }
 }
