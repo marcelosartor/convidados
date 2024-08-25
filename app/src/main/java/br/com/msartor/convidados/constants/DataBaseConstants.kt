@@ -2,6 +2,7 @@ package br.com.msartor.convidados.constants
 
 class DataBaseConstants private constructor(){
     object GUEST{
+        const val ID = "guestId"
         const val TABLE_NAME = "guest"
         object COLUMNS{
             const val ID = "id"
