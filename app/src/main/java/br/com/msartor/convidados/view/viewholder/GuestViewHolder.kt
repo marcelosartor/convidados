@@ -10,7 +10,7 @@ import br.com.msartor.convidados.view.listener.OnGuestListener
 
 class GuestViewHolder(private val bind: RowGuestBinding, private val listener: OnGuestListener) : RecyclerView.ViewHolder(bind.root) {
     fun bind(guestModel: GuestModel) {
-        bind.textName.text = guestModel.name
+        bind.textName.text = """(${guestModel.id})${guestModel.name}"""
 
         bind.textName.setOnClickListener {
             listener.onClick(guestModel.id)

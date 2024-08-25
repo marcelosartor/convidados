@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.msartor.convidados.constants.DataBaseConstants
 import br.com.msartor.convidados.databinding.FragmentAllGuestsBinding
 import br.com.msartor.convidados.view.adapter.GuestsAdapter
 import br.com.msartor.convidados.view.listener.OnGuestListener
-import br.com.msartor.convidados.viewmodel.AllGuestsViewModel
+import br.com.msartor.convidados.viewmodel.GuestsViewModel
 
 
 class AllGuestsFragment : Fragment() {
@@ -25,27 +23,31 @@ class AllGuestsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val adapter = GuestsAdapter()
-    private lateinit var viewModel: AllGuestsViewModel
+    private lateinit var viewModel: GuestsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[AllGuestsViewModel::class.java]
+        viewModel = ViewModelProvider(this)[GuestsViewModel::class.java]
 
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         // layout recycler view
-        binding.recyclerAllGuests.layoutManager = LinearLayoutManager(context)
+        binding.recyclerGuests.layoutManager = LinearLayoutManager(context)
 
         // adapter
-        binding.recyclerAllGuests.adapter = adapter
+        binding.recyclerGuests.adapter = adapter
 
         val listener = object : OnGuestListener {
             override fun onClick(id:Int) {
-                Toast.makeText(context,"Alow, Fui Clicado ${id}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, GuestFormActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt(DataBaseConstants.GUEST.ID, id)
+                intent.putExtras(bundle)
+                startActivity(intent)
             }
 
             override fun onDelete(id:Int) {
@@ -56,15 +58,12 @@ class AllGuestsFragment : Fragment() {
         }
         adapter.attachListener(listener)
 
-        viewModel.getAll()
-
         observe()
 
         return root
     }
-
-    override fun startActivity(intent: Intent) {
-        super.startActivity(intent)
+    override fun onResume() {
+        super.onResume()
         viewModel.getAll()
     }
 

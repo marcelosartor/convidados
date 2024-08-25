@@ -39,8 +39,8 @@ class GuestRepository private  constructor(context: Context){
             val args = arrayOf(guest.id.toString())
             val contentValues = ContentValues()
             val presence = if (guest.presence) 1 else 0
-            contentValues.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.name)
-            contentValues.put(DataBaseConstants.GUEST.COLUMNS.NAME, presence)
+            contentValues.put(DataBaseConstants.GUEST.COLUMNS.NAME,  guest.name)
+            contentValues.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE,presence)
 
             db.update(DataBaseConstants.GUEST.TABLE_NAME, contentValues, select, args)
             true
@@ -157,4 +157,37 @@ class GuestRepository private  constructor(context: Context){
             return list
         }
     }
+
+    fun get(guestId: Int):GuestModel? {
+        var guest: GuestModel? = null
+        try {
+            val db = guestDataBase.readableDatabase
+            val projection = arrayOf(
+                DataBaseConstants.GUEST.COLUMNS.ID,
+                DataBaseConstants.GUEST.COLUMNS.NAME,
+                DataBaseConstants.GUEST.COLUMNS.PRESENCE
+            )
+            val selection = """ ${DataBaseConstants.GUEST.COLUMNS.ID} = ? """
+            val args = arrayOf(guestId.toString())
+
+
+            val cursor = db.query(DataBaseConstants.GUEST.TABLE_NAME, projection, selection, args, null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val name = cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.NAME))
+                    val presence = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.PRESENCE))
+                    guest = GuestModel(guestId, name, presence == 1)
+
+                }
+            }
+
+            cursor.close()
+
+            return guest
+        }catch (error: Exception) {
+            return guest
+        }
+    }
+
 }
