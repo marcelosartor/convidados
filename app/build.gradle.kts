@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.devtools.ksp)
+    //id("com.google.devtools.ksp")
 }
 
 android {
@@ -36,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -46,7 +47,15 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
+    //implementation("androidx.room:room-runtime:2.6.1")
+    //ksp(           "androidx.room:room-compiler:2.6.1")
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    //room-runtime = {group = "androidx.room", name = "room-runtime" , version.ref = "room"}
+    //room-compiler = {group = "androidx.room", name = "room-compiler" , version.ref = "room"}
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }
